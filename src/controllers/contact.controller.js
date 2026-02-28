@@ -61,8 +61,13 @@ export const deleteContact = asyncHandler(async (req, res) => {
 
 //updated
 export const updateContact = asyncHandler(async (req, res) => {
-  const contact = await Contact.findByIdAndUpdate(req.params.id, req.body, {
+    const { name, email, message, number } = req.body;
+
+    const updatedData = {name,email,message,number}
+
+    const contact = await Contact.findByIdAndUpdate(req.params.id,updatedData, {
     returnDocument: "after",
+    runValidators: true
   });
   if (!contact) {
     const error = new Error("Contact not found");
