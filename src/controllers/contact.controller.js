@@ -6,6 +6,11 @@ export const createContact = asyncHandler(async (req, res) => {
   if (!name || !email || !message || !number) {
     return res.status(400).json({ message: "All files are required" });
   }
+   if (!/^\d+$/.test(number)) {
+    return res.status(400).json({
+      message: "The phone number must contain only digits",
+    });
+  }
 
   const newContact = await Contact.create({
     name,
